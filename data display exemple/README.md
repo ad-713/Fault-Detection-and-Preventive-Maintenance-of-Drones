@@ -4,7 +4,7 @@ Ce dossier contient une série de **11 figures (.jpg)** générées à partir de
 
 > **Fichier source :** `F0_SV0_SP1_t1_D1_R1.mat`
 
-Les figures illustrent différents aspects et résultats extraits du jeu de données, tels que des signaux, spectres, ou autres représentations graphiques pertinentes à l’analyse.
+Les figures illustrent différents aspects et résultats extraits du jeu de données.
 
 ---
 
@@ -12,20 +12,17 @@ Les figures illustrent différents aspects et résultats extraits du jeu de donn
 
 Les figures suivantes sont affichées ci-dessous dans l’ordre numérique :
 
-1. ![Figure 1](./Plot/Accelerometer Comparison.jpg)
-2. ![Figure 2](./Plot/Battery Level.jpg)
-3. ![Figure 3](./Plot/Gyroscope Angular Rates.jpg)
-4. ![Figure 4](./Plot/Height from Sensor.jpg)
-5. ![Figure 5](./Plot/IMU Angular Accelerations.jpg)
-6. ![Figure 6](./Plot/IMU Angular Rates.jpg)
-7. ![Figure 7](./Plot/IMU Orientation Comparison.jpg)
-8. ![Figure 8](./Plot/Internal Control References.jpg)
-9. ![Figure 9](./Plot/Motors & ESCs.jpg)
-10. ![Figure 10](./Plot/Position and Yaw Tracking.jpg)
-11. ![Figure 11](./Plot/Stabilizer Control Output.jpg)
-
-> 💡 Les noms des fichiers `.jpg` doivent correspondre à ceux listés ci-dessus (ex. `figure1.jpg`, `figure2.jpg`, etc.).  
-> Si tes fichiers portent d’autres noms, modifie les liens en conséquence.
+1. ![Figure 1](./Plot/Accelerometer%20Comparison.jpg)
+2. ![Figure 2](./Plot/Battery%20Level.jpg)
+3. ![Figure 3](./Plot/Gyroscope%20Angular%20Rates.jpg)
+4. ![Figure 4](./Plot/Height%20from%20Sensor.jpg)
+5. ![Figure 5](./Plot/IMU%20Angular%20Accelerations.jpg)
+6. ![Figure 6](./Plot/IMU%20Angular%20Rates.jpg)
+7. ![Figure 7](./Plot/IMU%20Orientation%20Comparison.jpg)
+8. ![Figure 8](./Plot/Internal%20Control%20References.jpg)
+9. ![Figure 9](./Plot/Motors%20&%20ESCs.jpg)
+10. ![Figure 10](./Plot/Position%20and%20Yaw%20Tracking.jpg)
+11. ![Figure 11](./Plot/Stabilizer%20Control%20Output.jpg)
 
 ---
 
@@ -38,5 +35,4 @@ Les figures suivantes sont affichées ci-dessous dans l’ordre numérique :
 
 ---
 
-## 📁 Organisation du dossier
 
