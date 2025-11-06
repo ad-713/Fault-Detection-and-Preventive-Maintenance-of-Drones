@@ -2,9 +2,10 @@ import scipy.io
 import pandas as pd
 import numpy as np
 import os
+import glob # Nécessaire pour lister les fichiers
 
-# --- EN-TÊTES DE COLONNES SPÉCIFIÉES (41 variables) ---
-# Ces noms seront utilisés pour nommer les 41 colonnes conservées.
+# --- 1. CONSTANTES : NOMS ET INDICES DES COLONNES À CONSERVER (41) ---
+
 specified_column_names = [
     'Time', 
     # IMU #1 (9)
@@ -27,65 +28,69 @@ specified_column_names = [
     'FL_Motor_Cmd', 'FL_ESC_Cmd', 'FR_Motor_Cmd', 'FR_ESC_Cmd', 
     'BL_Motor_Cmd', 'BL_ESC_Cmd', 'BR_Motor_Cmd', 'BR_ESC_Cmd'
 ]
-# Vérification de sécurité : 
-assert len(specified_column_names) == 41, "Erreur: La liste d'en-têtes spécifiés doit contenir 41 noms."
 
-# Mapping des indices des colonnes à conserver (basé sur votre tableau)
-# Les indices de DataFrame/Python commencent à 0
-# Indices 20, 21, 22, 23, 25, 26, 39 à 45, 55, 56 sont ceux à supprimer.
-# Indices des colonnes à CONSERVER (0 à 55, hors indices non spécifiés)
+# Indices des 41 colonnes à CONSERVER (0-basés sur les 56 colonnes originales)
 columns_to_keep_indices = [
-    0,                                                  # 1. Time (Index 0)
-    1, 2, 3, 4, 5, 6, 7, 8, 9,                          # 2-10. IMU #1 (Indices 1 à 9)
-    10, 11, 12, 13, 14, 15, 16, 17, 18,                 # 11-19. IMU #2 (Indices 10 à 18)
-    23,                                                 # 24. Battery Level (Index 23)
-    26, 27, 28, 29, 30, 31,                             # 27-32. Gyro #1 & Accel #1 (Indices 26 à 31)
-    32, 33, 34, 35, 36, 37,                             # 33-38. Gyro #2 & Accel #2 (Indices 32 à 37)
-    45,                                                 # 46. Height Range Data (Index 45)
-    46, 47, 48, 49, 50, 51, 52, 53                      # 47-54. Commandes Moteurs (Indices 46 à 53)
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 
+    23, 
+    26, 27, 28, 29, 30, 31, 
+    32, 33, 34, 35, 36, 37, 
+    45, 
+    46, 47, 48, 49, 50, 51, 52, 53
 ]
+assert len(columns_to_keep_indices) == 41, "Erreur dans le nombre d'indices."
+assert len(specified_column_names) == 41, "Erreur dans le nombre de noms."
 
-# --- PARAMÈTRES ET CHEMINS ---
 
-file_path = 'Data'
-file_name = 'F0_SV0_SP1_t1_D1_R1.mat'
-csv_name = 'QDrone_data.csv'
+# --- 2. DÉFINITION DU DOSSIER CIBLE ---
 
-mat_file_path = os.path.join(file_path, file_name)
-csv_path = os.path.join(file_path, csv_name)
+base_path = 'Data'
+sub_folder = 'DronePropA Motion Trajectories Dataset'
+# Chemin complet du dossier contenant tous les fichiers .mat
+full_data_directory = os.path.join(base_path, sub_folder)
 
-# --- EXPORTATION ET FILTRAGE ---
+# Utiliser glob pour trouver tous les fichiers *.mat
+mat_files_list = glob.glob(os.path.join(full_data_directory, '*.mat'))
 
-# 1. Charger le fichier .mat
-mat_content = scipy.io.loadmat(mat_file_path)
-QDrone_array = mat_content['QDrone_data']
+print(f"Dossier cible : {full_data_directory}")
+print(f"Nombre de fichiers .mat trouvés : {len(mat_files_list)}\n")
 
-# 2. Convertir et Transposer (taille : 87837 x 56)
-df = pd.DataFrame(QDrone_array)
-df_transposed = df.T 
+# --- 3. BOUCLE DE TRAITEMENT PAR LOT ---
 
-# 3. FILTRAGE : Conserver uniquement les 41 colonnes spécifiées
-# Utilise .iloc pour sélectionner les colonnes par leurs indices
-df_filtered = df_transposed.iloc[:, columns_to_keep_indices]
+for mat_file_path in mat_files_list:
+    
+    # Extraire le nom du fichier (ex: F0_SV0_SP1_t1_D1_R1)
+    file_name_with_ext = os.path.basename(mat_file_path)
+    file_base_name = os.path.splitext(file_name_with_ext)[0]
+    
+    # Définir le chemin de sortie du CSV (dans le même dossier que le .mat)
+    csv_name = f"{file_base_name}_QDrone.csv"
+    csv_path = os.path.join(full_data_directory, csv_name)
 
-# 4. Appliquer les noms de colonnes clairs (41 noms)
-df_filtered.columns = specified_column_names
+    print(f"--- Traitement de : {file_name_with_ext} ---")
 
-# 5. Exporter en fichier CSV (avec en-têtes)
-# L'écrasement est automatique.
-df_filtered.to_csv(csv_path, index=False, header=True) 
+    try:
+        # 3.1 Charger le fichier .mat
+        mat_content = scipy.io.loadmat(mat_file_path)
 
-print(f"✅ Exportation {csv_name} terminée et sauvegardée dans : {file_path}")
+        # 3.2 Extraire, convertir et transposer (taille : X x 56)
+        QDrone_array = mat_content['QDrone_data']
+        df = pd.DataFrame(QDrone_array)
+        df_transposed = df.T 
 
-# --- VÉRIFICATION RAPIDE ---
+        # 3.3 Filtrage et application des noms
+        df_filtered = df_transposed.iloc[:, columns_to_keep_indices]
+        df_filtered.columns = specified_column_names
 
-# 6. Charger le fichier CSV
-df_check = pd.read_csv(csv_path)
+        # 3.4 Exporter en CSV (header=True, écrasement automatique)
+        df_filtered.to_csv(csv_path, index=False, header=True)
+        
+        print(f"  ✅ Succès : Enregistré sous {csv_name} (Taille : {df_filtered.shape})")
 
-print("\n** RÉSULTATS DE LA VÉRIFICATION **")
-print("Taille du DataFrame (Lignes x Colonnes) après filtrage :")
-# DOIT afficher (87837, 41)
-print(df_check.shape) 
+    except KeyError:
+        print(f"  ❌ Erreur : La variable 'QDrone_data' est introuvable dans {file_name_with_ext}. Fichier ignoré.")
+    except Exception as e:
+        print(f"  ❌ Erreur inconnue lors du traitement de {file_name_with_ext}: {e}")
 
-print("\nAperçu des 5 premières lignes et des EN-TÊTES de colonnes :")
-print(df_check.head())
+print("\nProcessus de conversion par lot terminé.")
