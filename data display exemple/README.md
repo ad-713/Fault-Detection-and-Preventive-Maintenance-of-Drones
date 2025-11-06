@@ -8,21 +8,19 @@ Les figures illustrent différents aspects et résultats extraits du jeu de donn
 
 ---
 
-## 📊 Figures disponibles
+## 📊 Figures
 
-Les figures suivantes sont affichées ci-dessous dans l’ordre numérique :
-
-1. ![Figure 1](./Plot/Accelerometer%20Comparison.jpg)
-2. ![Figure 2](./Plot/Battery%20Level.jpg)
-3. ![Figure 3](./Plot/Gyroscope%20Angular%20Rates.jpg)
-4. ![Figure 4](./Plot/Height%20from%20Sensor.jpg)
-5. ![Figure 5](./Plot/IMU%20Angular%20Accelerations.jpg)
-6. ![Figure 6](./Plot/IMU%20Angular%20Rates.jpg)
-7. ![Figure 7](./Plot/IMU%20Orientation%20Comparison.jpg)
-8. ![Figure 8](./Plot/Internal%20Control%20References.jpg)
-9. ![Figure 9](./Plot/Motors%20&%20ESCs.jpg)
-10. ![Figure 10](./Plot/Position%20and%20Yaw%20Tracking.jpg)
-11. ![Figure 11](./Plot/Stabilizer%20Control%20Output.jpg)
+![Figure 1](./Plot/Accelerometer%20Comparison.jpg)
+![Figure 2](./Plot/Battery%20Level.jpg)
+![Figure 3](./Plot/Gyroscope%20Angular%20Rates.jpg)
+![Figure 4](./Plot/Height%20from%20Sensor.jpg)
+![Figure 5](./Plot/IMU%20Angular%20Accelerations.jpg)
+![Figure 6](./Plot/IMU%20Angular%20Rates.jpg)
+![Figure 7](./Plot/IMU%20Orientation%20Comparison.jpg)
+![Figure 8](./Plot/Internal%20Control%20References.jpg)
+![Figure 9](./Plot/Motors%20&%20ESCs.jpg)
+![Figure 10](./Plot/Position%20and%20Yaw%20Tracking.jpg)
+![Figure 11](./Plot/Stabilizer%20Control%20Output.jpg)
 
 ---
 
