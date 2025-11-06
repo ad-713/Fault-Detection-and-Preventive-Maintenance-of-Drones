@@ -55,9 +55,3 @@ Elles couvrent trois domaines principaux : **Commande / Dynamique / Fréquentiel
 - Les **features fréquentielles** isolent les harmoniques moteurs critiques responsables des vibrations caractéristiques des défauts.
 
 > ✅ Ce jeu de 12 variables V2 a permis une **amélioration nette de la performance de classification** grâce à une meilleure robustesse face au bruit et à la redondance capteur.
-
----
-
-**Auteur :** Équipe DronePropA  
-**Version :** V2 — Novembre 2025  
-**Objectif :** Stabilisation du modèle de diagnostic et amélioration de la séparation des signatures de défauts.
