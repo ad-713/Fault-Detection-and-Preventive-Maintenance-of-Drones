@@ -6,6 +6,8 @@ Alexandre HERVÉ
 Daphné MARTY
 Hugo LOUBIGNAC
 
+---
+
 # Document Méthodologique Final
 
 ---
