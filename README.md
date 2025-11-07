@@ -10,8 +10,6 @@ Hugo LOUBIGNAC
 
 # Document Méthodologique Final
 
----
-
 # *Feature Engineering* du Dataset **DronePropA**
 
 L’étape de **Feature Engineering** a été affinée pour isoler les **signatures dynamiques et de commande** les plus discriminantes pour la classification des défauts.  
