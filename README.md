@@ -52,6 +52,20 @@ Elles couvrent trois domaines principaux : **Commande / Dynamique / Fréquentiel
 
 ---
 
+## Feature Importance
+
+![Figure 1](./data%20display%20exemple/Plot/Feature_Importance.png)
+
+**Analyse**
+
+1. Compensation (Commande) : Motor_Roll_Diff_Mean_DS est la caractéristique la plus importante (Score ≈0.20). Cela prouve que l'effort de compensation asymétrique du pilote automatique pour contrer le déséquilibre de l'hélice est l'indicateur principal du défaut.
+
+2. Vibrations Ciblées (Fréquentiel V2) : FFT_Energy_HarmonicBand (Énergie dans la bande 2× la fréquence moteur) est la deuxième caractéristique la plus importante (Score ≈0.12). Ce score très élevé valide l'efficacité de l'analyse fréquentielle ciblée par rapport à la simple analyse statistique.
+
+3. Amplitude Vibratoire (Dynamique) : AccZ_IMU1_RMS_DS (Amplitude globale des vibrations) reste dans le top 3 (Score ≈0.13), confirmant que la force du bruit est un indicateur fondamental
+
+---
+
 ## 🧠 Résumé Méthodologique
 
 - Les **features de commande** capturent l’effort de stabilisation du contrôleur (déséquilibres moteurs).  
@@ -89,6 +103,26 @@ L'analyse montre que le modèle excelle à identifier la classe saine et a une b
 | **F2S** | **Fissure** | 8 | 0.58 | **0.88** | **0.70** | **Meilleur Recall (Détection).** Le modèle détecte 88% des Fissures. Le risque est la *faible Précision* (58%) : il confond F2S avec d'autres défauts (F1S, F3S) environ 42% du temps. |
 | **F3S** | **Coupure de Surface** | 8 | **0.80** | 0.50 | 0.62 | **Meilleure Précision.** Lorsqu'il prédit F3S, il est correct 80% du temps. Le problème est le *faible Recall* (50%) : il manque la moitié des vrais F3S (qui sont classés comme F0S ou F2S). |
 | **F1S** | **Coupure de Bord** | 7 | 0.67 | 0.57 | 0.62 | **Modéré.** Performance acceptable. Il confond les coupures de bord avec d'autres types de défauts (Precision) et manque certains cas (Recall). |
+
+---
+
+## Matrice de Confusion
+
+![Figure 2](./data%20display%20exemple/Plot/Matrice_Confusion.png)
+
+**Description**
+
+La matrice de confusion, normalisée par le Recall (sensibilité), montre la proportion d'échantillons réels de chaque classe qui ont été correctement ou incorrectement prédits. La diagonale représente les taux de succès par classe.
+
+**Analyse**
+
+- Performance du Sain (F0S) : Le modèle excelle à identifier la classe saine, avec un Recall de 0.90. Seuls 10% des vols sains sont à tort classés comme F2S (Fissure), ce qui est un excellent résultat pour minimiser les fausses alarmes.
+
+- Détection des Fissures (F2S) : La classe F2S a le meilleur Recall (0.88) parmi les défauts. Cela signifie que 88% des vrais défauts de type Fissure (F2S) sont correctement détectés. C'est la signature de défaut la plus distincte.
+
+- Confusion F1S : La classe F1S (Coupure de Bord) a un faible Recall (0.57). Les erreurs se répartissent : 14% sont classés Sain (F0S) et 29% sont classés F2S. Le défaut F1S est majoritairement confondu avec le défaut F2S.
+
+- Confusion F3S : La classe F3S (Coupure de Surface) a un faible Recall (0.50). Elle est manquée la moitié du temps. Les erreurs principales sont la confusion avec F1S (25%) et F2S (25%).
 
 ---
 
