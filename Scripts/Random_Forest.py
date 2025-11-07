@@ -1,12 +1,14 @@
 import pandas as pd
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
 
 # Charger le dataset de features V2
-OUTPUT_FILE = 'transformed_dataset.csv' 
-df = pd.read_csv(OUTPUT_FILE)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(script_dir, 'transformed_dataset.csv')
+df = pd.read_csv(file_path)
 
 # NOUVELLE LISTE des 12 caractéristiques V2
 FEATURE_COLUMNS = [
