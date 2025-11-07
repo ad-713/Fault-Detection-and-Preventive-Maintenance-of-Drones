@@ -1,12 +1,14 @@
 import pandas as pd
+import os
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import classification_report, roc_auc_score
 import numpy as np
 
 # --- 1. Configuration et Chargement des Données ---
-OUTPUT_FILE = 'transformed_dataset.csv' # Le fichier de features créé précédemment
-df = pd.read_csv(OUTPUT_FILE)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(script_dir, 'transformed_dataset.csv')
+df = pd.read_csv(file_path)
 
 # Caractéristiques utilisées (celles qui étaient dans le Top 10 d'importance)
 FEATURE_COLUMNS = [
