@@ -139,3 +139,5 @@ Le modèle présente une **confusion significative** entre les défauts de type 
 
 ### Prochaine Étape Recommandée
 Afin d'améliorer la Précision et le Recall pour les défauts F1S, F2S, et F3S, la prochaine étape logique est l'**Optimisation des Hyperparamètres du Random Forest**. L'ajustement du `max_depth` (profondeur maximale) et du `n_estimators` (nombre d'arbres) permettra au modèle de mieux exploiter les caractéristiques fines sans surapprendre les données.
+
+Pour améliorer le projet, l'étape logique suivante consiste à prédire le **niveau de sévérité** en utilisant une **approche de diagnostic en cascade**. Cela implique d'entraîner des **modèles de spécialisation distincts** pour chaque type de défaut (F1S, F2S, F3S) afin de classifier la sévérité (SV1, SV2, SV3) avec une plus grande précision.
