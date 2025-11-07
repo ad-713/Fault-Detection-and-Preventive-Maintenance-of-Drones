@@ -1,4 +1,12 @@
-# 📑 Document Méthodologique Final
+# Hackathon BI Pipeline - Track UAV - Team 24
+Gabriel GERMAIN
+Adrien GREVET
+Martin LAURENT
+Alexandre HERVÉ
+Daphné MARTY
+Hugo LOUBIGNAC
+
+# Document Méthodologique Final
 
 ---
 
