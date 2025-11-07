@@ -1,4 +1,8 @@
-# 📑 Document Méthodologique Final — *Feature Engineering* du Dataset **DronePropA**
+# 📑 Document Méthodologique Final
+
+---
+
+# *Feature Engineering* du Dataset **DronePropA**
 
 L’étape de **Feature Engineering** a été affinée pour isoler les **signatures dynamiques et de commande** les plus discriminantes pour la classification des défauts.  
 La stratégie a abouti à un jeu de **12 caractéristiques** (*features*) de haute valeur.  
@@ -55,3 +59,49 @@ Elles couvrent trois domaines principaux : **Commande / Dynamique / Fréquentiel
 - Les **features fréquentielles** isolent les harmoniques moteurs critiques responsables des vibrations caractéristiques des défauts.
 
 > ✅ Ce jeu de 12 variables V2 a permis une **amélioration nette de la performance de classification** grâce à une meilleure robustesse face au bruit et à la redondance capteur.
+
+--- 
+
+# 🚀 Analyse du Modèle Random Forest (Classification Simplifiée K=4)
+
+L'entraînement du Random Forest sur les **4 classes simplifiées** (F0S, F1S, F2S, F3S) en utilisant les 12 caractéristiques V2 a permis une amélioration significative par rapport aux tentatives précédentes (Accuracy totale de 72.73% contre 45% pour les 10 classes).
+
+---
+
+## 1. Statistiques Globales et Validation de la Stratégie
+
+| Métrique | Valeur | Interprétation |
+|:---|:---|:---|
+| **Accuracy** | **0.73** | Le modèle classe correctement 73% des vols. C'est un score élevé qui justifie l'approche par *feature engineering* avancée et la simplification des classes. |
+| **Macro Avg F1-Score** | **0.71** | Solide. Le modèle est capable de diagnostiquer les quatre types de classes avec une bonne fiabilité, en tenant compte de la performance de chaque classe. |
+| **Classes Entraînement** | F0S: 40, F1S: 30, F2S: 30, F3S: 30 | Les classes sont bien équilibrées, ce qui a stabilisé l'entraînement. |
+| **Classes Test (Support)** | 10, 7, 8, 8 | Le faible support par classe de test (7 à 10 échantillons) limite toujours la performance absolue, mais les résultats sont robustes. |
+
+---
+
+## 2. Analyse Détaillée de la Performance par Classe
+
+L'analyse montre que le modèle excelle à identifier la classe saine et a une bonne capacité de détection des défauts de type F2 (Fissure).
+
+| Classe | Définition | Support | Precision | Recall | F1-Score | Interprétation (Sécurité/Diagnostic) |
+|:---|:---|:---|:---|:---|:---|:---|
+| **F0S** | **Sain** | 10 | **0.90** | **0.90** | **0.90** | **Excellent.** Le modèle est très fiable pour identifier un drone sain, minimisant les fausses alarmes. |
+| **F2S** | **Fissure** | 8 | 0.58 | **0.88** | **0.70** | **Meilleur Recall (Détection).** Le modèle détecte 88% des Fissures. Le risque est la *faible Précision* (58%) : il confond F2S avec d'autres défauts (F1S, F3S) environ 42% du temps. |
+| **F3S** | **Coupure de Surface** | 8 | **0.80** | 0.50 | 0.62 | **Meilleure Précision.** Lorsqu'il prédit F3S, il est correct 80% du temps. Le problème est le *faible Recall* (50%) : il manque la moitié des vrais F3S (qui sont classés comme F0S ou F2S). |
+| **F1S** | **Coupure de Bord** | 7 | 0.67 | 0.57 | 0.62 | **Modéré.** Performance acceptable. Il confond les coupures de bord avec d'autres types de défauts (Precision) et manque certains cas (Recall). |
+
+---
+
+## 3. Conclusion et Stratégie d'Optimisation
+
+Le modèle Random Forest est désormais un outil de diagnostic fonctionnel.
+
+### Points Forts
+1.  **Fiabilité F0S :** Le modèle excelle à déterminer si le drone est sain (F1-Score 0.90).
+2.  **Détection F2S :** La signature des fissures (F2S) est très bien capturée (Recall 0.88).
+
+### Point Faible (Confusion)
+Le modèle présente une **confusion significative** entre les défauts de type F1S, F2S et F3S, comme en témoignent les F1-Scores modérés pour ces classes (0.62 à 0.70). Cette confusion est probablement due au fait que les défauts de faible gravité dans les trois groupes peuvent avoir des signatures dynamiques très similaires.
+
+### Prochaine Étape Recommandée
+Afin d'améliorer la Précision et le Recall pour les défauts F1S, F2S, et F3S, la prochaine étape logique est l'**Optimisation des Hyperparamètres du Random Forest**. L'ajustement du `max_depth` (profondeur maximale) et du `n_estimators` (nombre d'arbres) permettra au modèle de mieux exploiter les caractéristiques fines sans surapprendre les données.
